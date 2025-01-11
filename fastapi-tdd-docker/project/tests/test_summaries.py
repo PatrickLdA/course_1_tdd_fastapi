@@ -1,6 +1,6 @@
 import json
 
-import pytest
+# import pytest
 
 
 def test_create_summary(test_app_with_db):
@@ -20,7 +20,7 @@ def test_create_summaries_invalid_json(test_app):
                 "loc": ["body", "url"],
                 "msg": "Field required",
                 "type": "missing",
-                "url": "https://errors.pydantic.dev/2.9/v/missing",
+                "url": "https://errors.pydantic.dev/2.10/v/missing",
             }
         ]
     }
