@@ -98,4 +98,4 @@ Next, using your personal access token, authenticate to GitHub Packages with Doc
 
 Push the image to the Container registry on GitHub Packages: `docker push ghcr.io/<USERNAME>/<REPOSITORY_NAME>/summarizer:latest`
 
-
+![Continuous Integration and Delivery](https://github.com/patricklda/course_1_tdd_fastapi/workflows/Continuous%20Integration%20and%20Delivery/badge.svg?branch=main)
