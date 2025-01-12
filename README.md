@@ -19,7 +19,7 @@ The file `entrypoint.sh` of a container is the first executable of it
 
 Tortoise ORM is a Object Relational Mapper (ORM) that allows a interaction with databases
 
-`doker-compose down -v` remove all Dockers related to the project
+`docker-compose down -v` remove all Dockers related to the project
 
 Aerich is a migration tool for TortoiseORM
 
@@ -79,3 +79,12 @@ $ docker-compose exec web python -m pytest --durations=2
     └── requirements.txt
 ```
 
+## Heroku Deployment
+
+After install Heroku CLI and create an account:
+
+Logs in Heroku Container Registry: `heroku container:login`
+
+Push the image to the registry: `docker push registry.heroku.com/<APP_NAME>/web:latest`
+
+Release the image: `heroku container:release web --app <APP_NAME>`
