@@ -88,3 +88,14 @@ Logs in Heroku Container Registry: `heroku container:login`
 Push the image to the registry: `docker push registry.heroku.com/<APP_NAME>/web:latest`
 
 Release the image: `heroku container:release web --app <APP_NAME>`
+
+
+## Continuous Integration
+
+Build and tag the image: `docker build -f project/Dockerfile.prod -t ghcr.io/<USERNAME>/<REPOSITORY_NAME>/summarizer:latest ./project`
+
+Next, using your personal access token, authenticate to GitHub Packages with Docker: `docker login ghcr.io -u <USERNAME> -p <TOKEN>`
+
+Push the image to the Container registry on GitHub Packages: `docker push ghcr.io/<USERNAME>/<REPOSITORY_NAME>/summarizer:latest`
+
+
