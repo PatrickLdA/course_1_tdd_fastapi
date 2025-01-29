@@ -7,8 +7,8 @@ from app.api import crud, summaries
 
 
 def test_create_summary(test_app, monkeypatch):
-    test_request_payload = {"url": "https://foo.bar"}
-    test_response_payload = {"id": 1, "url": "https://foo.bar/"}
+    test_request_payload = {"url": "http://testdriven.io"}
+    test_response_payload = {"id": 1, "url": "http://testdriven.io/"}
 
     async def mock_post(payload):
         return 1
@@ -44,7 +44,7 @@ def test_create_summaries_invalid_json(test_app):
 def test_read_summary(test_app, monkeypatch):
     test_data = {
         "id": 1,
-        "url": "https://foo.bar",
+        "url": "http://testdriven.io",
         "summary": "summary",
         "created_at": datetime.utcnow().isoformat(),
     }
@@ -74,7 +74,7 @@ def test_read_all_summaries(test_app, monkeypatch):
     test_data = [
         {
             "id": 1,
-            "url": "https://foo.bar/",
+            "url": "http://testdriven.io/",
             "summary": "summary",
             "created_at": datetime.now().isoformat(),
         },
@@ -111,7 +111,7 @@ def test_read_all_summaries(test_app, monkeypatch):
     test_data = [
         {
             "id": 1,
-            "url": "https://foo.bar/",
+            "url": "http://testdriven.io/",
             "summary": "summary",
             "created_at": datetime.utcnow().isoformat(),
         },
@@ -137,7 +137,7 @@ def test_remove_summary(test_app, monkeypatch):
     async def mock_get(id):
         return {
             "id": 1,
-            "url": "https://foo.bar",
+            "url": "http://testdriven.io",
             "summary": "summary",
             "created_at": datetime.now().isoformat(),
         }
@@ -151,7 +151,7 @@ def test_remove_summary(test_app, monkeypatch):
 
     response = test_app.delete("/summaries/1/")
     assert response.status_code == 200
-    assert response.json() == {"id": 1, "url": "https://foo.bar/"}
+    assert response.json() == {"id": 1, "url": "http://testdriven.io/"}
 
 
 def test_remove_summary_incorrect_id(test_app, monkeypatch):
@@ -166,10 +166,10 @@ def test_remove_summary_incorrect_id(test_app, monkeypatch):
 
 
 def test_update_summary(test_app, monkeypatch):
-    test_request_payload = {"url": "https://foo.bar/", "summary": "updated"}
+    test_request_payload = {"url": "http://testdriven.io/", "summary": "updated"}
     test_response_payload = {
         "id": 1,
-        "url": "https://foo.bar/",
+        "url": "http://testdriven.io/",
         "summary": "summary",
         "created_at": datetime.utcnow().isoformat(),
     }
@@ -189,13 +189,13 @@ def test_update_summary(test_app, monkeypatch):
     [
         [
             999,
-            {"url": "https://foo.bar/", "summary": "updated!"},
+            {"url": "http://testdriven.io/", "summary": "updated!"},
             404,
             "Summary not found",
         ],
         [
             0,
-            {"url": "https://foo.bar/", "summary": "updated!"},
+            {"url": "http://testdriven.io/", "summary": "updated!"},
             422,
             [
                 {
@@ -231,14 +231,14 @@ def test_update_summary(test_app, monkeypatch):
         ],
         [
             1,
-            {"url": "https://foo.bar/"},
+            {"url": "http://testdriven.io/"},
             422,
             [
                 {
                     "type": "missing",
                     "loc": ["body", "summary"],
                     "msg": "Field required",
-                    "input": {"url": "https://foo.bar/"},
+                    "input": {"url": "http://testdriven.io/"},
                     "url": "https://errors.pydantic.dev/2.10/v/missing",
                 }
             ],
