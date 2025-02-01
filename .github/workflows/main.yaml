@@ -30,8 +30,8 @@ jobs:
           docker build \
             --cache-from ${{ env.IMAGE }}:latest \
             --tag ${{ env.IMAGE }}:latest \
-            --file ./fastapi-tdd-docker/project/Dockerfile.prod \
-            "./fastapi-tdd-docker/project"
+            --file ./project/Dockerfile.prod \
+            "./project"
       - name: Push image
         run: |
           docker push ${{ env.IMAGE }}:latest
@@ -60,8 +60,8 @@ jobs:
           docker build \
             --cache-from ${{ env.IMAGE }}:latest \
             --tag ${{ env.IMAGE }}:latest \
-            --file ./fastapi-tdd-docker/project/Dockerfile.prod \
-            "./fastapi-tdd-docker/project"
+            --file ./project/Dockerfile.prod \
+            "./project"
       - name: Run container
         run: |
           docker run \
@@ -106,8 +106,8 @@ jobs:
           docker build \
             --cache-from ${{ env.IMAGE }}:latest \
             --tag ${{ env.HEROKU_REGISTRY_IMAGE }}:latest \
-            --file ./fastapi-tdd-docker/project/Dockerfile.prod \
-            "./fastapi-tdd-docker/project"
+            --file ./project/Dockerfile.prod \
+            "./project"
       - name: Log in to the Heroku Container Registry
         run: docker login -u _ -p ${HEROKU_AUTH_TOKEN} registry.heroku.com
         env:
@@ -120,5 +120,5 @@ jobs:
           echo "HEROKU_AUTH_TOKEN=${{ secrets.HEROKU_AUTH_TOKEN }}" >> $GITHUB_ENV
       - name: Release
         run: |
-          chmod +x ./fastapi-tdd-docker/release.sh
-          ./fastapi-tdd-docker/release.sh
+          chmod +x ./release.sh
+          ./release.sh
