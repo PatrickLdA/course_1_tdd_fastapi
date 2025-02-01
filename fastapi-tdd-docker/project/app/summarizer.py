@@ -1,8 +1,10 @@
 import nltk
 from newspaper import Article
 
+from app.models.tortoise import TextSummary
 
-def generate_summary(url: str) -> str:
+
+async def generate_summary(summary_id: int, url: str) -> None:
     article = Article(url)  # Creation of article
     article.download()  # Download of the file
     article.parse()  # Extraction of meaningfull content
@@ -18,4 +20,6 @@ def generate_summary(url: str) -> str:
     finally:
         article.nlp()  # Extraction of relevant keywords
 
-    return article.summary
+    summary = article.summary
+
+    await TextSummary.filter(id=summary_id).update(summary=summary)

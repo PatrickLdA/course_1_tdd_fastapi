@@ -1,5 +1,7 @@
 # Test-Driven Development with Docker and FastAPI
 
+Reference code: https://github.com/testdrivenio/fastapi-tdd-docker
+
 ## Getting Started
 Starlette is the Asynchronous Server Gateway Interface (ASGI)
 
@@ -99,3 +101,70 @@ Next, using your personal access token, authenticate to GitHub Packages with Doc
 Push the image to the Container registry on GitHub Packages: `docker push ghcr.io/<USERNAME>/<REPOSITORY_NAME>/summarizer:latest`
 
 ![Continuous Integration and Delivery](https://github.com/patricklda/course_1_tdd_fastapi/workflows/Continuous%20Integration%20and%20Delivery/badge.svg?branch=main)
+
+## Alias
+
+To save some precious keystrokes, let's create an alias for the docker-compose command -- dc.
+
+Simply add the following line to your .bashrc file:
+
+```bash
+alias dc='docker-compose'
+```
+
+Save the file, then execute it:
+
+```bash
+$ source ~/.bashrc
+```
+
+### Common Commands
+
+Build the images: `$ docker-compose build`
+
+Run the containers: `$ docker-compose up -d`
+
+Apply the migrations: `$ docker-compose exec web aerich upgrade`. Prefer just to apply the latest changes to the database, without the migrations?
+`$ docker-compose exec web python app/db.py`
+
+Run the tests: `$ docker-compose exec web python -m pytest`
+
+Run the tests with coverage: `$ docker-compose exec web python -m pytest --cov="."`
+
+Lint: `$ docker-compose exec web flake8 .`
+
+Run Black and isort with check options:
+
+```bash
+$ docker-compose exec web black . --check
+$ docker-compose exec web isort . --check-only
+```
+
+Make code changes with Black and isort:
+
+```bash
+$ docker-compose exec web black .
+$ docker-compose exec web isort .
+```
+
+### Other Commands
+
+To stop the containers: `$ docker-compose stop`
+
+To bring down the containers: `$ docker-compose down`
+
+Want to force a build? `$ docker-compose build --no-cache`
+
+Remove images: `$ docker rmi $(docker images -q)`
+
+### Postgres
+
+Want to access the database via psql? `$ docker-compose exec web-db psql -U postgres`
+
+Then, you can connect to the database and run SQL queries. For example:
+
+```bash
+# \c web_dev
+# select * from textsummary;
+```
+

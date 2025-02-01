@@ -1,24 +1,23 @@
 import json
 from datetime import datetime
+from app.api import summaries
 
 import pytest
 
 from app.api import crud, summaries
 
 
-def test_create_summary(test_app, monkeypatch):
-    test_request_payload = {"url": "http://testdriven.io"}
-    test_response_payload = {"id": 1, "url": "http://testdriven.io/"}
+def test_create_summary(test_app_with_db, monkeypatch):
+    def mock_generate_summary(summary_id, url):
+        return None
+    monkeypatch.setattr(summaries, "generate_summary", mock_generate_summary)
 
-    async def mock_post(payload):
-        return 1
-
-    monkeypatch.setattr(crud, "post", mock_post)
-
-    response = test_app.post("/summaries/", data=json.dumps(test_request_payload),)
+    response = test_app_with_db.post(
+        "/summaries/", data=json.dumps({"url": "https://foo.bar"})
+    )
 
     assert response.status_code == 201
-    assert response.json() == test_response_payload
+    assert response.json()["url"] == "https://foo.bar/"
 
 
 def test_create_summaries_invalid_json(test_app):
